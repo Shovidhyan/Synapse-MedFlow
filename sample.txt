@@ -1,0 +1,119 @@
+GOOGLE SHEETS & EMAIL AUTOMATION GUIDE
+======================================
+
+To make the Advanced Patient Registration form work, and to send LIVE emails, you need to set up Google Apps Script. 
+
+SPREADSHEET HEADERS
+-------------------
+In your Google Sheet (https://docs.google.com/spreadsheets/d/1Ufkonhk5rxI9ZypQtH2JSDgoqFPSGGO6yHzcE5wFkH8/edit), ensure these are exactly in Row 1:
+A1: Date
+B1: Name
+C1: Email
+D1: Condition
+E1: Prescription
+F1: ReminderDays
+G1: DaysSent
+
+APPS SCRIPT CODE
+----------------
+1. In your Google Sheet, go to Extensions > Apps Script.
+2. Delete any code there and paste EXACTLY this code:
+
+```javascript
+function doPost(e) {
+  try {
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    var data = JSON.parse(e.postData.contents);
+    
+    // Append the row to the sheet (Starts DaysSent at 0)
+    sheet.appendRow([
+      new Date().toLocaleString(),
+      data.name,
+      data.email,
+      data.condition,
+      data.prescription,
+      data.reminderDays,
+      0
+    ]);
+    
+    // Send immediate Welcome Email
+    var subject = "Welcome to Synapse MedFlow - Care Plan Active";
+    var body = "Dear " + data.name + ",\n\n" +
+      "You have been successfully registered in our monitoring system.\n\n" +
+      "Condition: " + data.condition + "\n" +
+      "Prescription: " + data.prescription + "\n\n" +
+      "You will receive daily reminders to take your medication.\n\n" +
+      "Stay healthy,\nSynapse MedFlow Care Team";
+      
+    MailApp.sendEmail(data.email, subject, body);
+    
+    return ContentService.createTextOutput(JSON.stringify({ "result": "success" }))
+      .setMimeType(ContentService.MimeType.JSON);
+      
+  } catch (error) {
+    return ContentService.createTextOutput(JSON.stringify({ "result": "error", "error": error.toString() }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+// Handles CORS needed by web apps
+function doOptions(e) {
+  var headers = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Max-Age": "86400"
+  };
+  return ContentService.createTextOutput("").setHeaders(headers);
+}
+
+// Function to send daily reminders (We will schedule this to run at 9 AM)
+function sendDailyReminders() {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var data = sheet.getDataRange().getValues(); // Get all rows
+  
+  // Start from row 2 (index 1) to skip headers
+  for (var i = 1; i < data.length; i++) {
+    var row = data[i];
+    var email = row[2]; // Column C
+    var condition = row[3]; // Column D 
+    var prescription = row[4]; // Column E
+    var totalDays = parseInt(row[5]) || 0; // Column F (Reminder Days)
+    var daysSent = parseInt(row[6]) || 0; // Column G (Days Sent)
+    
+    // Check if there is an email and if we still need to send reminders
+    if (email && (daysSent < totalDays)) {
+      var subject = "Daily Medication Reminder - Synapse MedFlow";
+      var body = "Good morning!\n\nThis is your daily reminder to take your pills.\n\n" +
+                 "Condition tracked: " + condition + "\n" +
+                 "Prescription to take today: " + prescription + "\n\n" +
+                 "Have a great day!";
+                 
+      MailApp.sendEmail(email, subject, body);
+      
+      // Update the "DaysSent" column in the sheet by adding 1
+      sheet.getRange(i + 1, 7).setValue(daysSent + 1);
+    }
+  }
+}
+```
+
+HOW TO DEPLOY
+-------------
+1. Click the Save icon (floppy disk).
+2. Click "Deploy" > "New deployment".
+3. Select "Web app". Set "Execute as" to "Me" and "Who has access" to "Anyone".
+4. After you authorize via your Google Account, copy the "Web app URL" given.
+
+HOW TO SET UP THE 9 AM DAILY AUTOMATIC EMAIL
+--------------------------------------------
+1. On the left sidebar in Apps Script, click the "Triggers" icon (it looks like a clock).
+2. Click the big blue "+ Add Trigger" button in the bottom right.
+3. Choose which function to run: Select `sendDailyReminders`
+4. Choose which deployment should run: Head
+5. Select event source: `Time-driven`
+6. Select type of time based trigger: `Day timer`
+7. Select time of day: `9am to 10am`
+8. Click Save. 
+
+That's it! Now every day around 9 AM, Google will auto-read your sheet and email anyone who still needs their pills!

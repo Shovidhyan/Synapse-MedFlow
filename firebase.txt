@@ -1,0 +1,42 @@
+Synapse MedFlow - Firebase Setup Guide
+======================================
+
+Follow these steps to set up your Firebase project and connect it to the app:
+
+Part 1: Create the Firebase Project
+------------------------------------
+1. Go to the Firebase Console: https://console.firebase.google.com/
+2. Click on "Add project".
+3. Enter "Synapse MedFlow" (or your preferred name) as the project name.
+4. (Optional) Enable Google Analytics for the project.
+5. Click "Create Project" and wait for it to finish. Click "Continue".
+
+Part 2: Register the Web App
+------------------------------------
+1. In the Project Overview page (dashboard), click the Web icon (`</>`) to add a web app.
+2. Enter an App nickname (e.g., "MedFlow Web").
+3. Click "Register app".
+4. Firebase will display a code block containing your `firebaseConfig` object.
+   * => COPY this block of code (the one with apiKey, authDomain, projectId, etc.).
+5. Open `src/lib/firebase.ts` in your code editor and REPLACE the placeholder `firebaseConfig` variables with your actual copied credentials.
+6. Click "Continue to console".
+
+Part 3: Enable Authentication
+------------------------------------
+1. In the left sidebar of the Firebase console, expand "Build" and click "Authentication".
+2. Click "Get started".
+3. On the "Sign-in method" tab, click "Email/Password".
+4. Toggle the "Enable" switch to ON.
+5. Click "Save".
+
+Part 4: Enable Firestore Database
+------------------------------------
+1. In the left sidebar, under "Build", click "Firestore Database".
+2. Click "Create database".
+3. Choose "Start in test mode" (This allows you to read/write without complex security rules while developing). 
+   * Note: Before going to production, you will need to update these security rules.
+4. Choose a Cloud Firestore location closest to your users.
+5. Click "Enable".
+
+You are now fully set up! 
+The app will now automatically use your Firebase project to handle logins and store Appointments.
