@@ -2,12 +2,14 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Activity, Heart, BarChart3, ArrowRight, Shield, Lock, Cloud, Users, Calendar, Pill } from 'lucide-react';
 import { motion } from 'framer-motion';
+import logo from '@/assets/logo.png';
+
 const Index = () => {
   return (
     <div className="min-h-screen bg-background relative">
       <header className="absolute top-0 w-full z-50 px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-xl shadow-sm border border-white/20">
-          <img src="/src/assets/logo.png" alt="Synapse MedFlow Logo" className="h-8 w-auto object-contain" />
+          <img src={logo} alt="Synapse MedFlow Logo" className="h-8 w-auto object-contain" />
           <span className="font-heading font-bold text-xl text-foreground">Synapse MedFlow</span>
         </div>
         <Link to="/login">

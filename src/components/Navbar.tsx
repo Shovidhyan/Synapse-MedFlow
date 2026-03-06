@@ -10,6 +10,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import logoImg from '@/assets/logo.png';
 
 const languages = [
   { code: 'en', label: 'English' },
@@ -28,7 +29,7 @@ const Navbar = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 py-4">
       <div className="container mx-auto flex items-center justify-between px-4">
         <Link to="/" className="flex items-center gap-3 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-xl shadow-sm border border-white/20">
-          <img src="/src/assets/logo.png" alt="Synapse MedFlow Logo" className="h-8 w-auto object-contain" />
+          <img src={logoImg} alt="Synapse MedFlow Logo" className="h-8 w-auto object-contain" />
           <span className="font-heading font-bold text-xl text-foreground">
             Synapse <span className="text-gradient-primary">MedFlow</span>
           </span>
