@@ -94,8 +94,8 @@ const Login = () => {
           <p className="text-muted-foreground">{t('login.subtitle')}</p>
         </motion.div>
 
-        {/* 4 cards in one horizontal row */}
-        <div className="grid grid-cols-4 gap-5 w-full max-w-6xl">
+        {/* Cards row - responsive grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 w-full max-w-6xl">
           {roles.map((role, i) => (
             <motion.div
               key={role.id}

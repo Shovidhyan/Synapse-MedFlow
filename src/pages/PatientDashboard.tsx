@@ -106,12 +106,12 @@ const PatientDashboard = () => {
 
           {/* Tabs */}
           <Tabs defaultValue="overview" className="mb-8">
-            <TabsList className="mb-6">
-              <TabsTrigger value="overview">{t('dashboard.overview')}</TabsTrigger>
-              <TabsTrigger value="appointments" className="flex items-center gap-1.5">
+            <TabsList className="mb-6 flex overflow-x-auto w-full justify-start pb-2 hide-scrollbar">
+              <TabsTrigger value="overview" className="whitespace-nowrap">{t('dashboard.overview')}</TabsTrigger>
+              <TabsTrigger value="appointments" className="flex items-center gap-1.5 whitespace-nowrap">
                 <CalendarPlus className="w-3.5 h-3.5" /> {t('dashboard.appointments')}
               </TabsTrigger>
-              <TabsTrigger value="ai-jobs" className="flex items-center gap-1.5">
+              <TabsTrigger value="ai-jobs" className="flex items-center gap-1.5 whitespace-nowrap">
                 <Sparkles className="w-3.5 h-3.5" /> {t('dashboard.aiJobs')}
               </TabsTrigger>
             </TabsList>

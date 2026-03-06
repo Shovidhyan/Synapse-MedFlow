@@ -196,9 +196,9 @@ const DoctorDashboard = () => {
               </h1>
               <p className="text-muted-foreground mt-1">{livePatients.length} patients • {highRiskCount} high risk</p>
             </div>
-            <div className="flex gap-3">
-              <Button variant="outline" size="sm">
-                <Download className="w-4 h-4 mr-1" /> Export Reports
+            <div className="flex flex-wrap items-center gap-3">
+              <Button variant="outline" size="sm" className="hidden sm:inline-flex mt-1 sm:mt-0">
+                <Download className="w-4 h-4 mr-1" /> Export
               </Button>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -237,9 +237,9 @@ const DoctorDashboard = () => {
           </motion.div>
 
           <Tabs defaultValue="patients">
-            <TabsList className="mb-6">
-              <TabsTrigger value="patients">Patient Roster</TabsTrigger>
-              <TabsTrigger value="appointments" className="flex items-center gap-1.5 relative">
+            <TabsList className="mb-6 flex overflow-x-auto w-full justify-start pb-2 hide-scrollbar">
+              <TabsTrigger value="patients" className="whitespace-nowrap">Patient Roster</TabsTrigger>
+              <TabsTrigger value="appointments" className="flex items-center gap-1.5 relative whitespace-nowrap">
                 <Calendar className="w-4 h-4" /> Appointments
                 {upcomingAppointments.length > 0 && (
                   <span className="absolute -top-1 -right-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-critical px-1 text-[10px] font-bold text-critical-foreground">
@@ -247,7 +247,7 @@ const DoctorDashboard = () => {
                   </span>
                 )}
               </TabsTrigger>
-              <TabsTrigger value="actions" className="flex items-center gap-1.5 ml-2">
+              <TabsTrigger value="actions" className="flex items-center gap-1.5 ml-2 whitespace-nowrap">
                 <MessageSquareWarning className="w-4 h-4" /> Action History
               </TabsTrigger>
             </TabsList>
@@ -275,12 +275,12 @@ const DoctorDashboard = () => {
                 </motion.div>
               )}
 
-              <div className="grid lg:grid-cols-[340px,1fr] gap-6">
+              <div className="grid grid-cols-1 lg:grid-cols-[340px,1fr] gap-6">
                 {/* Patient List */}
                 <motion.div
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  className="glass-card p-4 overflow-hidden"
+                  className="glass-card p-4 overflow-hidden w-full"
                 >
                   <div className="flex items-center gap-2 mb-4">
                     <div className="relative flex-1">
