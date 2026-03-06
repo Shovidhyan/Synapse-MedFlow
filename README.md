@@ -70,3 +70,7 @@ Synapse MedFlow is a comprehensive healthcare management and patient engagement 
     ```sh
     https://drive.google.com/file/d/11Ye-Oi2DeDedcshPy3NkQYqrX8D0ad4d/view?usp=drivesdk
     ```
+
+
+
+    ![Synapse MedFlow Workflow](./assets/WORKFLOW(1).png)
