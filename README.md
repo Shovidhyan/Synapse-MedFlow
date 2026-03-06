@@ -59,3 +59,14 @@ Synapse MedFlow is a comprehensive healthcare management and patient engagement 
    npm run dev
    ```
    The application will instantly start running (typically at `http://localhost:5173`).
+
+
+   **Live link :
+    ```sh
+    https://synapse-med-flow.vercel.app/
+    ```
+
+   **Apk link :
+    ```sh
+    https://drive.google.com/file/d/11Ye-Oi2DeDedcshPy3NkQYqrX8D0ad4d/view?usp=drivesdk
+    ```
